@@ -5,7 +5,7 @@ import Markdown from "markdown-to-jsx";
 import Button from "./buttons/QuizButton";
 import CodeMirror from "./CodeMirror";
 import Confetti from "./Confetti";
-import { NavBar } from "./NavBar";
+import { QuestionNav as NavBar } from "./NavBar";
 import { Modal } from "./Modal";
 
 import { QuestionProps, Option } from "./types";

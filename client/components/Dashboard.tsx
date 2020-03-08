@@ -1,10 +1,12 @@
 import styled from "styled-components";
 import Link from "next/link";
 
+import Button from "./buttons/Button";
+import { DashboardNav as NavBar } from "./NavBar";
+
 import { GridItemProps, DashboardProps, Question } from "./types";
 import { getStyles } from "../utils/getStyles";
 import { useQuestionStatus } from "../utils/useLocalStorage";
-import Button from "./buttons/Button";
 
 const GridItem: React.FC<GridItemProps> = ({ question }) => {
   const status: string = useQuestionStatus(question.id);
@@ -12,15 +14,18 @@ const GridItem: React.FC<GridItemProps> = ({ question }) => {
 };
 
 const Dashboard: React.FC<DashboardProps> = ({ data }) => (
-  <StyledDashboardGrid>
-    {data?.questions?.map((question: Question) => (
-      <Link href={`question/${question.id}`} key={question.id}>
-        <a>
-          <GridItem question={question} />
-        </a>
-      </Link>
-    ))}
-  </StyledDashboardGrid>
+  <>
+    <NavBar />
+    <StyledDashboardGrid>
+      {data?.questions?.map((question: Question) => (
+        <Link href={`question/${question.id}`} key={question.id}>
+          <a>
+            <GridItem question={question} />
+          </a>
+        </Link>
+      ))}
+    </StyledDashboardGrid>
+  </>
 );
 
 export default Dashboard;
