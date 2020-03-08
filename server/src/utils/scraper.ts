@@ -1,4 +1,4 @@
-import request from "request";
+import fetch from "node-fetch";
 import fs from "fs";
 
 (Array.prototype as any).customSplice = function(...args) {
@@ -58,16 +58,16 @@ function getData(q) {
   };
 }
 
-request(
-  "https://raw.githubusercontent.com/lydiahallie/javascript-questions/master/README.md",
-  (err, _, html) => {
-    if (err) throw new Error(err);
-
+(async () => {
+  try {
+    const res = await fetch(
+      "https://raw.githubusercontent.com/lydiahallie/javascript-questions/master/README.md"
+    );
+    const html = await res.text();
     const questions = html.split("---").slice(3);
     const data = questions.map((question, i) => {
       return { id: i + 1, ...getData(question) };
     });
-
     fs.writeFile(
       "data/index.ts",
       `// Last generated: ${new Date()} - Don't modify \n\n export default ${JSON.stringify(
@@ -80,5 +80,7 @@ request(
         console.log("Saved!");
       }
     );
+  } catch (e) {
+    throw new Error(e);
   }
-);
+})();
