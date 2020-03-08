@@ -17,3 +17,11 @@ export interface Option {
   correct: boolean;
   text: string;
 }
+
+export interface GridItemProps {
+  readonly question: Question;
+}
+
+export interface DashboardProps {
+  data: QuestionsData;
+}
