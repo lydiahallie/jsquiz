@@ -1,0 +1,19 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "graphql": "^14.6.0",
+    "graphql-yoga": "^1.18.3",
+    "request": "^2.88.2"
+  },
+  "scripts": {
+    "start": "cross-env NODE_ENV=production src/server.ts",
+    "dev": "cross-env NODE_ENV=development nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/server env NODE_ENV=development",
+    "scrape": "ts-node src/utils/scraper"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.2"
+  }
+}
