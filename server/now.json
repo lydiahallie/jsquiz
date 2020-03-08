@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "name": "jsquiz-server",
+  "env": {
+    "IS_NOW": "true"
+  },
+  "builds": [{ "src": "src/server.ts", "use": "@now/node-server@canary" }],
+  "routes": [{ "src": "/.*", "dest": "src/server.ts" }]
+}
