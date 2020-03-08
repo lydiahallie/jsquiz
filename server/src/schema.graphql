@@ -1,0 +1,17 @@
+type Query {
+  question(id: ID!): Question
+  questions: [Question!]!
+}
+
+type Question {
+  id: ID!
+  title: String!
+  options: [Option!]!
+  code: String!
+  explanation: String!
+}
+
+type Option {
+  correct: Boolean!
+  text: String!
+}
