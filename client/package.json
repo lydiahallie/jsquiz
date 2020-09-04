@@ -17,7 +17,7 @@
     "file-loader": "^5.1.0",
     "graphql": "^14.6.0",
     "isomorphic-unfetch": "^3.0.0",
-    "markdown-to-jsx": "^6.11.0",
+    "markdown-to-jsx": "^6.11.4",
     "next": "9.2.2",
     "next-fonts": "^1.0.3",
     "next-offline": "^5.0.0",
