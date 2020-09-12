@@ -6,7 +6,7 @@
   "dependencies": {
     "graphql": "^14.6.0",
     "graphql-yoga": "^1.18.3",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.1"
   },
   "scripts": {
     "start": "cross-env NODE_ENV=production src/server.ts",
