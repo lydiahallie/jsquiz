@@ -5,6 +5,7 @@ import styled, { keyframes } from "styled-components";
 import { useSpring, animated, config } from "react-spring";
 import { QuestionContext } from "./Question";
 import Button from "./buttons/Button";
+import CodeMirror from "./CodeMirror";
 import { getStyles } from "../utils/getStyles";
 
 export const Modal = () => {
@@ -22,6 +23,7 @@ export const Modal = () => {
 
   return (
     <StyledModal style={style}>
+      <CodeMirror />
       <Answer>{correctAnswer.text || ""}</Answer>
       <Explanation>{question.explanation}</Explanation>
       <Link href={`/question/${parseInt(question.id) + 1}`}>
