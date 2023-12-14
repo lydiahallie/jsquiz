@@ -3415,7 +3415,7 @@ export default [
 			},
 			{
 				correct: false,
-				text: "Default aren't imported with `*`, only named exports"
+				text: "Default aren\'t imported with `*`, only named exports"
 			}
 		],
 		explanation:
@@ -3496,7 +3496,7 @@ export default [
 			}
 		],
 		explanation:
-			"The `Object.freeze` method _freezes_ an object. No properties can be added, modified, or removed.\n\nHowever, it only _shallowly_ freezes the object, meaning that only _direct_ properties on the object are frozen. If the property is another object, like `address` in this case, the properties on that object aren't frozen, and can be modified."
+			"The `Object.freeze` method _freezes_ an object. No properties can be added, modified, or removed.\n\nHowever, it only _shallowly_ freezes the object, meaning that only _direct_ properties on the object are frozen. If the property is another object, like `address` in this case, the properties on that object aren\'t frozen, and can be modified."
 	},
 	{
 		id: 138,
@@ -3680,5 +3680,302 @@ export default [
 		],
 		explanation:
 			'Objects aren\'t iterable by default. An iterable is an iterable if the iterator protocol is present. We can add this manually by adding the iterator symbol `[Symbol.iterator]`, which has to return a generator object, for example by making it a generator function `*[Symbol.iterator]() {}`. This generator function has to yield the `Object.values` of the `person` object if we want it to return the array `["Lydia Hallie", 21]`: `yield* Object.values(this)`.'
+	}
+	{
+		id: 145,
+		title:
+			'145. What's the output?',
+		code:
+			'let count = 0;\n const nums = [0,1,2,3]; \n\n nums.forEach(num => { \n 	if (num) count += 1 \n }) \n\n console.log(count)}',
+		options: [
+			{
+				correct: false,
+				text: "1"
+			},
+			{
+				correct: false,
+				text: "2"
+			},
+			{
+				correct: true,
+				text: "3"
+			},
+			{
+				correct: false,
+				text: "4"
+			}
+		],
+		explanation:
+			'The `if` condition within the `forEach` loop checks whether the value of `num` is truthy or falsy. Since the first number in the `nums` array is `0`, a falsy value, the `if` statement's code block won't be executed. `count` only gets incremented for the other 3 numbers in the `nums` array, `1`, `2` and `3`. Since `count` gets incremented by `1` 3 times, the value of `count` is `3`.'
+	}
+	{
+		id: 146,
+		title:
+			'146. What's the output?',
+		code:
+			'function getFruit(fruits) {\n 	console.log(fruits?.[1]?.[1])\n }\n\n getFruit([['🍊', '🍌'], ['🍍']])',
+		options: [
+			{
+				correct: false,
+				text: "`null`, `undefined`, 🍌"
+			},
+			{
+				correct: false,
+				text: "`[]`, `null`, 🍌"
+			},
+			{
+				correct: false,
+				text: "`[]`, `[]`, 🍌"
+			},
+			{
+				correct: true,
+				text: "`undefined`, `undefined`, 🍌"
+			}
+		],
+		explanation:
+			'The `?` allows us to optionally access deeper nested properties within objects. We're trying to log the item on index `1` within the subarray that's on index `1` of the `fruits` array. If the subarray on index `1` in the `fruits` array doesn't exist, it'll simply return `undefined`. If the subarray on index `1` in the `fruits` array exists, but this subarray doesn't have an item on its `1` index, it'll also return `undefined`. First, we're trying to log the second item in the `['🍍']` subarray of `[['🍊', '🍌'], ['🍍']]`. This subarray only contains one item, which means there is no item on index `1`, and returns `undefined`. Then, we're invoking the `getFruits` function without passing a value as an argument, which means that `fruits` has a value of `undefined` by default. Since we're conditionally chaining the item on index `1` of `fruits`, it returns `undefined` since this item on index `1` does not exist. Lastly, we're trying to log the second item in the `['🍊', '🍌']` subarray of `['🍍'], ['🍊', '🍌']`. The item on index `1` within this subarray is `🍌`, which gets logged.'
+	}
+	{
+		id: 147,
+		title:
+			'147. What's the output?',
+		code:
+			'class Calc { \n constructor() { \n this.count = 0 \n } \n increase() { \n this.count++ \n } \n } \n\n const calc = new Calc() \n\n new Calc().increase() \n\n console.log(calc.count)',
+		options: [
+			{
+				correct: true,
+				text: "`0`"
+			},
+			{
+				correct: false,
+				text: "`1`"
+			},
+			{
+				correct: false,
+				text: "`undefined`"
+			},
+			{
+				correct: false,
+				text: "`ReferenceError`"
+			}
+		],
+		explanation:
+			'We set the variable `calc` equal to a new instance of the `Calc` class. Then, we instantiate a new instance of `Calc`, and invoke the `increase` method on this instance. Since the count property is within the constructor of the `Calc` class, the count property is not shared on the prototype of `Calc`. This means that the value of count has not been updated for the instance calc points to, count is still `0`.'
+	}
+	{
+		id: 148,
+		title:
+			'148. What's the output?',
+		code:
+			'const user = { \n email: "e@mail.com", \n password: "12345" \n } \n \n const updateUser = ({ email, password }) => { \n if (email) { \n Object.assign(user, { email }) \n } \n \n if (password) { \n user.password = password \n } \n \n return user \n } \n \n const updatedUser = updateUser({ email: "new@email.com" }) \n \n console.log(updatedUser === user)',
+		options: [
+			{
+				correct: false,
+				text: "`False`"
+			},
+			{
+				correct: true,
+				text: "`true`"
+			},
+			{
+				correct: false	,
+				text: "`TypeError`"
+			},
+			{
+				correct: false,
+				text: "`ReferenceError`"
+			}
+		],
+		explanation:
+			'The `updateUser` function updates the values of the `email` and `password` properties on user if their values are passed to the function, after which the function returns the `user` object. The returned value of the `updateUser` function is the `user` object, which means that the value of updatedUser is a reference to the same `user` object that user points to. `updatedUser === user` equals `true`.'
+	}
+	{
+		id: 149,
+		title:
+			'149. What's the output?',
+		code:
+			'const fruit = ['🍌', '🍊', '🍎'] \n fruit.slice(0, 1) \n fruit.splice(0, 1) \n fruit.unshift('🍇') \n\n console.log(fruit)',
+		options: [
+			{
+				correct: false,
+				text: "`['🍌', '🍊', '🍎']`"
+			},
+			{
+				correct: false,
+				text: "`['🍊', '🍎']`"
+			},
+			{
+				correct: true,
+				text: "`['🍇', '🍊', '🍎']`"
+			},
+			{
+				correct: false,
+				text: "`['🍇', '🍌', '🍊', '🍎']`"
+			}
+		],
+		explanation:
+			'First, we invoke the `slice` method on the fruit array. The slice method does not modify the original array but returns the value that it sliced off the array: the banana emoji. Then, we invoke the `splice` method on the fruit array. The splice method does modify the original array, which means that the fruit array now consists of `['🍊', '🍎']`. At last, we invoke the `unshift` method on the `fruit` array, which modifies the original array by adding the provided value, ‘🍇’ in this case, as the first element in the array. The fruit array now consists of `['🍇', '🍊', '🍎']`.'
+	}
+	{
+		id: 150,
+		title:
+			'150. What's the output?',
+		code:
+			'const animals = {}; \n let dog = { emoji: '🐶' } \n let cat = { emoji: '🐈' } \n \n animals[dog] = { ...dog, name: "Mara" } \n animals[cat] = { ...cat, name: "Sara" } \n \n console.log(animals[dog])',
+		options: [
+			{
+				correct: false,
+				text: "`{ emoji: "🐶", name: "Mara" }`"
+			},
+			{
+				correct: true,
+				text: "`{ emoji: "🐈", name: "Sara" }`"
+			},
+			{
+				correct: false,
+				text: "`undefined`"
+			},
+			{
+				correct: false,
+				text: "`ReferenceError`"
+			}
+		],
+		explanation:
+			'Object keys are converted to strings. Since the value of `dog` is an object, `animals[dog]` actually means that we’re creating a new property called `"[object Object]"` equal to the new object. `animals["[object Object]"]` is now equal to `{ emoji: "🐶", name: "Mara"}`. `cat` is also an object, which means that `animals[cat]` actually means that we’re overwriting the value of `animals["[object Object]"]` with the new cat properties. `Logging animals[dog]`, or actually `animals["[object Object]"]` since converting the `dog` object to a string results `"[object Object]"]`, returns the `{ emoji: "🐈", name: "Sara" }`.'
+	}
+	{
+		id: 151,
+		title:
+			'151. What's the output?',
+		code:
+			'const user = { \n email: "my@email.com", \n updateEmail: email => { \n this.email = email \n } \n } \n \n user.updateEmail("new@email.com") \n console.log(user.email)',
+		options: [
+			{
+				correct: true,
+				text: "`my@email.com`"
+			},
+			{
+				correct: false,
+				text: "`new@email.com`"
+			},
+			{
+				correct: false,
+				text: "`undefined`"
+			},
+			{
+				correct: false,
+				text: "`ReferenceError`"
+			}
+		],
+		explanation:
+			'The `updateEmail` function is an arrow function and is not bound to the `user` object. This means that the this keyword is not referring to the `user` object but refers to the global scope in this case. The value of `email` within the `user` object does not get updated. When logging the value of `user.email`, the original value of `my@email.com` gets returned.'
+	}
+	{
+		id: 152,
+		title:
+			'152. What's the output?',
+		code:
+			'const promise1 = Promise.resolve('First') \n const promise2 = Promise.resolve('Second') \n const promise3 = Promise.reject('Third') \n const promise4 = Promise.resolve('Fourth') \n \n const runPromises = async () => { \n const res1 = await Promise.all([promise1, promise2]) \n const res2  = await Promise.all([promise3, promise4]) \n return [res1, res2] \n } \n \n runPromises() \n .then(res => console.log(res)) \n .catch(err => console.log(err))',
+		options: [
+			{
+				correct: false,
+				text: "`[['First', 'Second'], ['Fourth']]`"
+			},
+			{
+				correct: false,
+				text: "`[['First', 'Second'], ['Third', 'Fourth']]`"
+			},
+			{
+				correct: false,
+				text: "`[['First', 'Second']]`"
+			},
+			{
+				correct: true,
+				text: "`'Third'`"
+			}
+		],
+		explanation:
+			'The `Promise.all` method runs the passed promises in parallel. If one promise fails, the `Promise.all` method rejects with the value of the rejected promise. In this case, `promise3` rejected with the value `"Third"`. We’re catching the rejected value in the chained `catch` method on the `runPromises` invocation to catch any errors within the `runPromises` function. Only `"Third"` gets logged, since `promise3` rejected with this value.'
+	}
+	{
+		id: 153,
+		title:
+			'What should the value of `method` be to log `{ name: "Lydia", age: 22 }`?',
+		code:
+			'const keys = ["name", "age"] \n const values = ["Lydia", 22] \n \n const method = /* ?? */ \n Object[method](keys.map((_, i) => { \n return [keys[i], values[i]] \n })) // { name: "Lydia", age: 22 }',
+		options: [
+			{
+				correct: false,
+				text: "`entries`"
+			},
+			{
+				correct: false,
+				text: "`values`"
+			},
+			{
+				correct: true,
+				text: "`fromEntries`"
+			},
+			{
+				correct: false,
+				text: "`forEach`"
+			}
+		],
+		explanation:
+			'The `fromEntries` method turns a 2d array into an object. The first element in each subarray will be the key, and the second element in each subarray will be the value. In this case, we’re mapping over the `keys` array, which returns an array whose first element is the item on the key array at the current index, and the second element is the item of the values array at the current index. This creates an array of subarrays containing the correct keys and values, which results in `{ name: "Lydia", age: 22 }`'
+	}
+	{
+		id: 154,
+		title:
+			'154. What's the output?',
+		code:
+			'const createMember = ({ email, address = {} }) => { \n const validEmail = /.+\@.+\..+/.test(email) \n if (!validEmail) throw new Error("Valid email pls") \n \n return { \n email, \n address: address ? address : null \n } \n } \n \n const member = createMember({ email: "my@email.com" }) \n console.log(member)`',
+		options: [
+			{
+				correct: false,
+				text: "`{ email: "my@email.com", address: null }`"
+			},
+			{
+				correct: false,
+				text: "`{ email: "my@email.com" }`"
+			},
+			{
+				correct: true,
+				text: "`{ email: "my@email.com", address: {} }`"
+			},
+			{
+				correct: false,
+				text: "`{ email: "my@email.com", address: undefined }`"
+			}
+		],
+		explanation:
+			'The default value of `address` is an empty object `{}`. When we set the variable `member` equal to the object returned by the `createMember` function, we didn't pass a value for address, which means that the value of address is the default empty object `{}`. An empty object is a truthy value, which means that the condition of the `address ?` `address : null` conditional returns `true`. The value of address is the empty object `{}`.'
+	}
+	{
+		id: 155,
+		title:
+			'155. What's the output?,
+		code:
+			'let randomValue = { name: "Lydia" } \n randomValue = 23 \n \n if (!typeof randomValue === "string") { \n console.log("It's not a string!") \n } else { \n console.log("Yay it's a string!") \n }',
+		options: [
+			{
+				correct: false,
+				text: "`It's not a string!`"
+			},
+			{
+				correct: true,
+				text: "`Yay it's a string!`"
+			},
+			{
+				correct: false,
+				text: "`TypeError`"
+			},
+			{
+				correct: false,
+				text: "`undefined`"
+			}
+		],
+		explanation:
+			'The condition within the `if` statement checks whether the value of `!typeof randomValue` is equal to `"string"`. The ! operator converts the value to a boolean value. If the value is truthy, the returned value will be false; if the value is falsy, the returned value will be `true`. In this case, the returned value of `typeof randomValue` is the truthy value `"number"`, meaning that the value of `!typeof randomValue` is the boolean value `false`. `!typeof randomValue === "string"` always returns false, since we're actually checking `false === "string"`. Since the condition returned `false`, the code block of the `else` statement gets run, and `Yay, it's a string!` gets logged.'
 	}
 ];
